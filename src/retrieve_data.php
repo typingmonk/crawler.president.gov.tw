@@ -34,6 +34,11 @@ function retrieveData($page_id)
         return null;
     }
 
+    //check is not law based on title
+    $matched_pattern = Keyword::isObviousNotLaw($title);
+    $is_law_related = ($matched_pattern !== false) ? 0 : '';
+    $matched_pattern = $matched_pattern ?: '';
+
     //get date and gazette index
     $date_n_index = $crawler->filter('h4.goldencolor.inline')->text();
     preg_match('/(\d+)年(\d+)月(\d+)日/', $date_n_index, $matches);
@@ -51,5 +56,7 @@ function retrieveData($page_id)
         ':title' => $title,
         ':date' => $date,
         ':gazette_index' => $gazette_index,
+        ':is_law_related' => $is_law_related,
+        ':matched_pattern' => $matched_pattern,
     ];
 }

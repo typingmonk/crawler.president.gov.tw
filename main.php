@@ -12,7 +12,7 @@ while ($page_id <= $page_id_latest) {
     $status_code = curl_page($page_id);
     $data = retrieveData($page_id);
     if (isset($data)) {
-        insertGazetteData($pdo, $data);
+        insertArticleData($pdo, $data);
     } else {
         echo "failed.\n";
         echo "http status code: $status_code\n";

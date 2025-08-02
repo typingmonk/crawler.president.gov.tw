@@ -19,9 +19,9 @@ function getNextPageID($pdo)
     return $page_id;
 }
 
-function insertGazetteData($pdo, $data)
+function insertArticleData($pdo, $data)
 {
-    $stmt = $pdo->prepare('INSERT INTO gazette_article (id, title, date, gazette_index) VALUES (:id, :title, :date, :gazette_index)');
+    $stmt = $pdo->prepare('INSERT INTO gazette_article (id, title, date, gazette_index, is_law_related, matched_pattern) VALUES (:id, :title, :date, :gazette_index, :is_law_related, :matched_pattern)');
     $success = $stmt->execute($data);
 
     return $success;
