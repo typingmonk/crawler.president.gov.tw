@@ -7,9 +7,9 @@ $rows = getAllRows($pdo);
 foreach ($rows as $row) {
     $id = $row['id'];
     $title = $row['title'];
-    $is_not_law = Keyword::isObviousNotLaw($title);
-    if ($is_not_law !== false) {
+    $matched_pattern = Keyword::isObviousNotLaw($title);
+    if ($matched_pattern !== false) {
         echo "$id: not law detected.\n";
-        updateIsLawRelated($id, !$is_not_law, $pdo);
+        updateIsLawRelated($id, 0, $matched_pattern, $pdo);
     }
 }
