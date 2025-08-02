@@ -40,7 +40,7 @@ function updateIsLawRelated($id, $is_law_related, $matched_pattern, $pdo) {
 
 function getAllRows($pdo)
 {
-    $stmt = $pdo->query("SELECT * FROM gazette_article;");
+    $stmt = $pdo->query("SELECT * FROM gazette_article ORDER BY id DESC");
     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     return $rows;
