@@ -10,6 +10,6 @@ foreach ($rows as $row) {
     $matched_pattern = Keyword::isObviousNotLaw($title);
     if ($matched_pattern !== false) {
         echo "$id: not law detected.\n";
-        updateIsLawRelated($id, 0, $matched_pattern, $pdo);
+        updateIsLawRelated($id, 0, $matched_pattern, '', $pdo);
     }
 }
