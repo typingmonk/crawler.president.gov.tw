@@ -21,17 +21,18 @@ function getNextPageID($pdo)
 
 function insertArticleData($pdo, $data)
 {
-    $stmt = $pdo->prepare('INSERT INTO gazette_article (id, title, date, gazette_index, is_law_related, matched_pattern) VALUES (:id, :title, :date, :gazette_index, :is_law_related, :matched_pattern)');
+    $stmt = $pdo->prepare('INSERT INTO gazette_article (id, title, date, gazette_index, is_law_related, matched_pattern, law_name) VALUES (:id, :title, :date, :gazette_index, :is_law_related, :matched_pattern, :law_name)');
     $success = $stmt->execute($data);
 
     return $success;
 }
 
-function updateIsLawRelated($id, $is_law_related, $matched_pattern, $pdo) {
-    $stmt = $pdo->prepare('UPDATE gazette_article SET is_law_related = :is_law_related, matched_pattern = :matched_pattern WHERE id = :id');
+function updateIsLawRelated($id, $is_law_related, $matched_pattern, $law_name, $pdo) {
+    $stmt = $pdo->prepare('UPDATE gazette_article SET is_law_related = :is_law_related, matched_pattern = :matched_pattern, law_name = :law_name WHERE id = :id');
     $result = $stmt->execute([
         ':is_law_related' => $is_law_related,
         ':matched_pattern' => $matched_pattern,
+        ':law_name' => $law_name,
         ':id' => $id
     ]);
 

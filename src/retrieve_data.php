@@ -34,10 +34,22 @@ function retrieveData($page_id)
         return null;
     }
 
+    $isMatched = false;
     //check is not law based on title
     $matched_pattern = Keyword::isObviousNotLaw($title);
+    $isMatched = ($matched_pattern !== false);
     $is_law_related = ($matched_pattern !== false) ? 0 : '';
     $matched_pattern = $matched_pattern ?: '';
+
+    //check is law based on title in using Keyword::getLawNameType1() 
+    $law_name = '';
+    if (!$isMatched) {
+        $result = Keyword::getLawNameType1($title);
+        $isMatched = ($result !== false);
+        $is_law_related = ($result !== false) ? 1 : '';
+        $law_name = ($result !== false) ? $result[0] : '';
+        $matched_pattern = ($result !== false) ? $result[1] : '';
+    }
 
     //get date and gazette index
     $date_n_index = $crawler->filter('h4.goldencolor.inline')->text();
@@ -58,5 +70,6 @@ function retrieveData($page_id)
         ':gazette_index' => $gazette_index,
         ':is_law_related' => $is_law_related,
         ':matched_pattern' => $matched_pattern,
+        ':law_name' => $law_name,
     ];
 }

@@ -18,7 +18,11 @@ class Keyword {
                 }
             }
         }
-        return array_merge(['增訂、刪除並修正'], $actions, $single_actions);
+        return array_merge(
+            ['增訂、刪除並修正', '延展並修正'],
+            $actions,
+            $single_actions
+        );
     }
 
     public static function isObviousNotLaw($title)
@@ -30,6 +34,36 @@ class Keyword {
         }
         if (str_ends_with($title, '典禮')) {
             return '典禮$';
+        }
+        return false;
+    }
+
+    public static function getLawNameType1($title)
+    {
+        $law_end_strs = ['條文', '條例', '條例條文'];
+        $actions = self::getActions();
+
+        foreach ($law_end_strs as $end_str) {
+            if (str_ends_with($title, $end_str)) {
+                $length_str = mb_strlen($title);
+                foreach ($actions as $action) {
+                    $length_action = mb_strlen($action);
+                    if (mb_substr($title, 0, $length_action) === $action) {
+                        $length_title = mb_strlen($title);
+                        $matched_pattern = "^{$action}.*" . "{$end_str}$";
+                        $length_law = $length_title - $length_action;
+                        if (str_contains($end_str, '條文')) {
+                            $length_law = $length_law - 2;
+                        }
+                        $law = mb_substr(
+                            $title,
+                            $length_action,
+                            $length_law
+                        );
+                        return [$law, $matched_pattern];
+                    }
+                }
+            }
         }
         return false;
     }
