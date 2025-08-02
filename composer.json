@@ -1,0 +1,14 @@
+{
+    "require": {
+        "symfony/dom-crawler": "^7.3",
+        "symfony/css-selector": "^7.3"
+    },
+    "autoload": {
+        "files": [
+            "src/curl.php",
+            "src/retrieve_data.php",
+            "src/db_tools.php",
+            "src/Keyword.php"
+        ]
+    }
+}
