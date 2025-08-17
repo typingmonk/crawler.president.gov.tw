@@ -50,6 +50,7 @@ function retrieveData($page_id)
         $law_name = ($result !== false) ? $result[0] : '';
         $matched_pattern = ($result !== false) ? $result[1] : '';
     }
+    $law_name = preg_replace('/\s+/', '', $law_name);
 
     //get date and gazette index
     $date_n_index = $crawler->filter('h4.goldencolor.inline')->text();
