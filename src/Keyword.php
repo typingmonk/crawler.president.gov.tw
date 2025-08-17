@@ -67,4 +67,29 @@ class Keyword {
         }
         return false;
     }
+
+    public static function getLawID($law_name)
+    {
+        $query_url = 'https://ly.govapi.tw/v2/laws?q="' . $law_name . '"&類別=母法&limit=10';
+        $ret = file_get_contents($query_url);
+        $json = json_decode($ret);
+        $laws = $json->laws ?? [];
+        if (empty($laws)) {
+            //no matched law in db
+            return false;
+        }
+        foreach ($laws as $law) {
+            $law_name_retrieved = $law->名稱;
+            if ($law_name != $law_name_retrieved) {
+                //law_name not exact matched
+                continue;
+            }
+
+            //update law_id
+            $law_id = $law->法律編號;
+            return $law_id;
+        }
+
+        return false;
+    }
 }
