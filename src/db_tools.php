@@ -55,4 +55,20 @@ function getLawRelatedRows($pdo)
     return $rows;
 }
 
+function getAllRowsWithLawName($pdo)
+{
+    $stmt = $pdo->query("SELECT * FROM gazette_article WHERE is_law_related = 1 ORDER BY id DESC");
+    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+    return $rows;
+}
+
+function updateLawID($id, $law_id, $pdo) {
+    $stmt = $pdo->prepare('UPDATE gazette_article SET law_id = :law_id WHERE id = :id');
+    $result = $stmt->execute([
+        ':law_id' => $law_id,
+        ':id' => $id
+    ]);
+
+    return $result;
+}

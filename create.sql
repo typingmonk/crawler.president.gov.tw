@@ -5,5 +5,6 @@ CREATE TABLE IF NOT EXISTS gazette_article (
     gazette_index INTEGER,
     is_law_related INTEGER,
     matched_pattern TEXT,
-    law_name TEXT
+    law_name TEXT,
+    law_id
 );
